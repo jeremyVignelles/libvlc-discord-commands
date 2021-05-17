@@ -9,24 +9,14 @@ export enum InteractionResponseType {
     Pong = 1,
 
     /**
-     * ACK a command without sending a message, eating the user's input
-     */
-    Acknowledge = 2,
-
-    /**
-     * respond with a message, eating the user's input
-     */
-    ChannelMessage = 3,
-
-    /**
-     * respond with a message, showing the user's input
+     * respond to an interaction with a message
      */
     ChannelMessageWithSource = 4,
 
     /**
-     * ACK a command without sending a message, showing the user's input
+     * ACK an interaction and edit a response later, the user sees a loading state
      */
-    AcknowledgeWithSource = 5
+     DeferredChannelMessageWithSource = 5
 }
 
 export interface InteractionResponse {

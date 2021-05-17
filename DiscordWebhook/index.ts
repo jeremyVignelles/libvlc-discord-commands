@@ -49,7 +49,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
 
         response = {
-            type: InteractionResponseType.ChannelMessage,
+            type: InteractionResponseType.ChannelMessageWithSource,
             data: mentionUserId ? {
                 content: "<@"+ mentionUserId + "> " + message,
                 allowed_mentions: { users: [mentionUserId] }
