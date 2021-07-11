@@ -2,7 +2,7 @@
 
 import { AllowedMentions } from "./AllowedMentionsModels";
 
-export enum InteractionResponseType {
+export enum InteractionCallbackType {
     /**
      * ACK a Ping
      */
@@ -23,7 +23,7 @@ export interface InteractionResponse {
     /**
      * the type of response
      */
-    type: InteractionResponseType,
+    type: InteractionCallbackType,
 
     /**
      * an optional response message
@@ -40,7 +40,7 @@ export interface InteractionApplicationCommandCallbackData {
     /**
      * message content
      */
-    content: string,
+    content?: string,
 
     /**
      * supports up to 10 embeds
@@ -51,5 +51,10 @@ export interface InteractionApplicationCommandCallbackData {
     /**
      * allowed mentions object
      */
-    allowed_mentions?: AllowedMentions
+    allowed_mentions?: AllowedMentions,
+
+    /**
+     * set to 64 to make your response ephemeral
+     */
+    flags?: number,
 }

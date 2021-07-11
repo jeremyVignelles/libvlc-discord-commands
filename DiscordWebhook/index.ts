@@ -1,7 +1,7 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions"
 import * as nacl from 'tweetnacl';
 import { ApplicationCommandInteractionDataOption, Interaction } from './InteractionModels';
-import { InteractionResponse, InteractionResponseType } from './InteractionResponseModels';
+import { InteractionResponse, InteractionCallbackType } from './InteractionResponseModels';
 import predefinedMessages from './messages';
 
 const PUBLIC_KEY = process.env.DISCORD_PUBLIC_KEY;
@@ -36,7 +36,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     if (body.type === 1) {
         response = {
-            type: InteractionResponseType.Pong
+            type: InteractionCallbackType.Pong
         };
     } else if (body.type === 2) {
         let options = new Map<string, ApplicationCommandInteractionDataOption>(body.data.options.map(o => [o.name, o]));
@@ -49,7 +49,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         }
 
         response = {
-            type: InteractionResponseType.ChannelMessageWithSource,
+            type: InteractionCallbackType.ChannelMessageWithSource,
             data: mentionUserId ? {
                 content: "<@"+ mentionUserId + "> " + message,
                 allowed_mentions: { users: [mentionUserId] }
@@ -64,6 +64,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     } else {
         context.res = {
             status: 400,
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: { message: 'Unsupported body type '+ (body as any).type }
         }
         return;
@@ -71,6 +74,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
     context.res = {
         // status: 200, /* Defaults to 200 */
+        headers: {
+            'Content-Type': 'application/json'
+        },
         body: response
     };
 

@@ -15,6 +15,11 @@ export interface CreateApplicationCommand {
      * the parameters for the command
      */
     options?: ApplicationCommandOption[];
+
+    /**
+     * whether the command is enabled by default when the app is added to a guild (default: true)
+     */
+    default_permission?: boolean;
 }
 
 export interface ApplicationCommandOption {
